@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+
+<!-- Head @MedApp -->
+
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
+    <title>MedApp-video call</title>
+
+    <!-- General CSS Files -->
+    <link rel="stylesheet" href="assets/css/app.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+        integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
+
+    <!-- Template CSS -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel='shortcut icon' type='image/x-icon' href='assets/img/favicon.ico' />
+    <link rel='stylesheet' href='assets/css/app.css' type="text/css">
+    <link rel="stylesheet" href="assets/css/components.css">
+
+    <!-- General Js -->
+    <script type="module" src='assets/js/events.js'></script>
+    <script src='/socket.io/socket.io.js'></script>
+    <script type="module" src='assets/js/rtc.js'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webrtc-adapter/7.3.0/adapter.min.js"
+        integrity="sha256-2qQheewaqnZlXJ3RJRghVUwD/3fD9HNqxh4C+zvgmF4=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js'></script>
+    <script src='https://cdn.rawgit.com/yahoo/xss-filters/master/dist/xss-filters.js'></script>
+    <script src='assets/js/autolink.js'></script>
+</head>
+<!-- End Head @MedApp -->
+
+<!--Body @MedApp-->
+
+<body>
+    <div class="custom-modal" id='recording-options-modal'>
+        <div class="custom-modal-content">
+            <div class="row text-center">
+                <div class="col-md-6 mb-2">
+                    <span class="record-option" id='record-video'>Record video</span>
+                </div>
+                <div class="col-md-6 mb-2">
+                    <span class="record-option" id='record-screen'>Record screen</span>
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-md-12 text-center">
+                    <button class="btn btn-outline-danger" id='closeModal'>Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Create a Room Section -->
+    <div id='room-create' hidden>
+        <section class="section">
+            <div class="container mt-5">
+                <div class="row">
+                    <div
+                        class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4">
+                        <div class="card card-primary">
+                            <div class="card-header">
+                                <h4>Create A Room</h4>
+                            </div>
+                            <div class="card-body">
+                                <form class="needs-validation" novalidate="" id="toggle-chat-pane">
+                                    <div class="form-group">
+                                        <label for="room-name">Room Name</label>
+                                        <input id='room-name' type="text" class="form-control" name="room-name"
+                                            tabindex="1" required autofocus>
+                                        <div class="invalid-feedback">
+                                            Please fill in your room name
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="d-block">
+                                            <label for="your-name" class="control-label">Name</label>
+
+                                        </div>
+                                        <input id='your-name' type="text" class="form-control" name="your-name"
+                                            tabindex="2" required>
+                                        <div class="invalid-feedback">
+                                            please fill in your name
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <button id='create-room' class="btn btn-primary btn-lg btn-block" tabindex="4">
+                                            Create Room
+                                        </button>
+                                    </div>
+                                </form>
+                                <div class="text-center mt-4 mb-3">
+                                    <span class="form-text small text-danger" id='err-msg'></span>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div id='room-created' class="mt-5 text-muted text-center">
+                            CopyRight @<a href="#">MedApp</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <!-- End of Create Room -->
+
+    <!--Join Room-->
+    <div class="container-fluid" id='username-set' hidden>
+        <section class="section">
+            <div class="container mt-5">
+                <div class="row">
+                    <div
+                        class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4">
+                        <div class="card card-primary">
+                            <div class="card-header">
+                                <h4>Join Room</h4>
+                            </div>
+                            <div class="card-body">
+                                <form class="needs-validation" novalidate="">
+                                    <div class="form-group">
+                                        <label for="username">Your Name</label>
+                                        <input id='username' type="text" class="form-control" name="username"
+                                            tabindex="1" required autofocus>
+                                        <div class="invalid-feedback">
+                                            Please fill in your username
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <button id='enter-room' class="btn btn-primary btn-lg btn-block" tabindex="4">
+                                            Join Room
+                                        </button>
+                                    </div>
+                                </form>
+                                <div class="col-12 text-center">
+                                    <span class="form-text small text-danger" id='err-msg-username'></span>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div id='room-created' class="mt-5 text-muted text-center">
+                            CopyRight @<a href="#">MedApp</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+    <!-- End og Join Room-->
+
+    <div class="main room-comm" hidden>
+        <div class="main__left">
+            <!-- open sidebar menu -->
+            <a class="btn btn-primary btn-customized open-menu" id='record' title="Record" role="button">
+                <i class="fas fa-camera"></i> <span>Record</span>
+            </a>
+            <div class="main__videos">
+                <div class="video-layout-row">
+                    <div class="video-layout-column">
+
+                        <video class="local-video mirror-mode  " id='local' volume='0' autoplay muted></video>
+                    </div>
+                </div>
+                
+                <div id='videos'></div>
+            </div>
+            <div class="main__controls">
+
+                <div class="main__controls__block">
+                    <div class="main__controls__button">
+                        <button type="button" class="btn btn-danger btn-circle btn-xl"><i
+                                class="fas fa-phone"></i></button>
+                    </div>
+                    <div class="main__controls__button">
+                        <button type="button" class="btn btn-light btn-circle btn-xl" id='toggle-video'
+                            title="Hide Video" x><i class="fas fa-video"></i></button>
+                    </div>
+
+
+                    <div class="main__controls__button">
+                        <button type="button" class="btn btn-light btn-circle btn-xl" id="toggle-mute"><i
+                                class="fas fa-microphone"></i></button>
+                    </div>
+                    <div class="main__controls__button">
+                        <button type="button" class="btn btn-light btn-circle btn-xl" id="share-screen"><i
+                                class="fas fa-share"></i></button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="main__right">
+            <div class="main__header">
+                <h6>Chat</h6>
+            </div>
+            <div class="main__chat_window">
+                <div id='chat-messages'></div>
+
+
+            </div>
+            <div class="main__message_container">
+                <input id='chat-input' class="form-control rounded-0  border-info" placeholder="Type here...">
+            </div>
+        </div>
+    </div>
+
+    <!-- General JS Scripts -->
+    <script src="assets/js/app.min.js"></script>
+    <!-- JS Libraies -->
+    <script src="assets/bundles/apexcharts/apexcharts.min.js"></script>
+    <!-- Template JS File -->
+    <script src="assets/js/scripts.js"></script>
+    <!-- Custom JS File -->
+    <script src="assets/js/custom.js"></script>
+</body>
+<!-- Body End @MedApp -->
+
+</html>

@@ -1,0 +1,32 @@
+{
+  "name": "MedApp-video-confrence",
+  "version": "0.0.1",
+  "description": "A conference call with your favorite Dr.",
+  "main": "src/app.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "serve-favicon": "^2.5.0",
+    "socket.io": "^2.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.3"
+  },
+  "scripts": {
+    "watch": "nodemon --watch \"src/\" --exec \"node src/app.js\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rexfordasamoah51/video_confrencing_app.git"
+  },
+  "keywords": [
+    "LiveStream",
+    "Server"
+  ],
+  "author": "MedApp <medappghana@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Rexfordasamoah51/video_confrencing_app/issues"
+  },
+  "homepage": "https://github.com/Rexfordasamoah51/video_confrencing_app#readme"
+}
