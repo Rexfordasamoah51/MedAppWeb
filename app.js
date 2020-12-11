@@ -2,7 +2,7 @@ let express = require( 'express' );
 let app = express();
 let server = require( 'http' ).Server( app );
 let io = require( 'socket.io' )( server );
-let stream = require( '../src/ws/stream' );
+let stream = require( './stream' );
 let path = require( 'path' );
 let favicon = require( 'serve-favicon' );
 
@@ -16,4 +16,4 @@ app.get( '/', ( req, res ) => {
 
 io.of( '/stream' ).on( 'connection', stream );
 
-server.listen(process.env.PORT|| 3000 );
+server.listen(3000 );
