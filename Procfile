@@ -1,2 +1,2 @@
-web: run cd src
+web: ../src
 web: run node app.js
