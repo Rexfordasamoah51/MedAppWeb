@@ -6,6 +6,7 @@ let stream = require('./stream');
 let path = require('path');
 let favicon = require('serve-favicon');
 
+//Specify the asset to be use
 app.use(favicon(path.join(__dirname, 'favicon.ico')));
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
 app.use('/main/assets', express.static(path.join(__dirname, 'main_page/assets')));
