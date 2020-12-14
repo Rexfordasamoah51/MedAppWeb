@@ -34,7 +34,7 @@ app.get('/dashboard', (req, res) => {
 app.get('/userSignIn', (req, res) => {
     Request.post({
         "headers": { "content-type": "application/json" },
-        "url": "http://localhost:4000/users/authenticate",
+        "url": "https://medappghanaapi.herokuapp.com/users/authenticate",
         "body": JSON.stringify({
             "email": req.query.email,
             "password": req.query.password
@@ -53,7 +53,7 @@ app.get('/userSignIn', (req, res) => {
 app.get('/userRegister', (req, res) => {
     Request.post({
         "headers": { "content-type": "application/json" },
-        "url": "http://localhost:4000/users/register",
+        "url": "https://medappghanaapi.herokuapp.com/users/register",
         "body": JSON.stringify({
             "firstName": req.query.frist_name,
             "lastName": req.query.last_name,
