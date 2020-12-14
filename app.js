@@ -43,8 +43,8 @@ app.get('/userSignIn', (req, res) => {
         var msg = JSON.parse(body)
         if (error) {
             return console.dir(error);
-        } else if (msg['message'] == 'email or password is incorrect') {
-            return console.dir(msg['message'])
+        } else if ('message' in msg) {
+            return  res.sendStatus(404);
         }
         res.redirect('/dashboard')
     });
